@@ -1,5 +1,52 @@
 
 -- Inserción adiministradores 
+CREATE TABLE IF NOT EXISTS ADMINISTRATORS (
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    EMAIL VARCHAR(255) NOT NULL,
+    PASSWORD VARCHAR(255) NOT NULL
+);
+CREATE TABLE IF NOT EXISTS BRANDS (
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    NAME VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS CATEGORIES (
+    ID INT PRIMARY KEY,
+    NAME VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS VEHICLES (
+    ID INT PRIMARY KEY,
+    IMAGE VARCHAR(255) NOT NULL,
+    BRAND_ID INT NOT NULL,
+    MODEL VARCHAR(255) NOT NULL,
+    VEHICLE_YEAR INT NOT NULL,
+    CYLINDER_CAPACITY INT,
+    FOREIGN KEY (BRAND_ID) REFERENCES BRANDS(ID)
+);
+CREATE TABLE IF NOT EXISTS QUOTES (
+    ID INT PRIMARY KEY,
+    ESTATE VARCHAR(255) NOT NULL,
+    PRICE DECIMAL(10, 2) NOT NULL,
+    VEHICLE_ID INT NOT NULL,
+    FOREIGN KEY (VEHICLE_ID) REFERENCES VEHICLES(ID)
+);
+CREATE TABLE IF NOT EXISTS PRODUCTS (
+    ID INT PRIMARY KEY,
+    NAME VARCHAR(255) NOT NULL,
+    DESCRIPTION TEXT NOT NULL,
+    TECHNICAL_DESCRIPTION TEXT NOT NULL,
+    IMAGE VARCHAR(255) NOT NULL,
+    PRICE DECIMAL(10, 2) NOT NULL,
+    COIN VARCHAR(3) NOT NULL,
+    DISCOUNT INT,
+    TAX INT,
+    CATEGORY_ID INT NOT NULL,
+    QUOTE_ID INT NOT NULL,
+    FOREIGN KEY (CATEGORY_ID) REFERENCES CATEGORIES(ID),
+    FOREIGN KEY (QUOTE_ID) REFERENCES QUOTES(ID)
+);
+
 INSERT INTO ADMINISTRATORS (EMAIL, PASSWORD) VALUES ('root@mail.com', '1234');
 INSERT INTO ADMINISTRATORS (EMAIL, PASSWORD) VALUES ('hola@mail.com', '1234');
 
@@ -75,4 +122,6 @@ INSERT INTO PRODUCTS (ID, NAME, DESCRIPTION, TECHNICAL_DESCRIPTION, IMAGE, PRICE
 
 INSERT INTO PRODUCTS (ID, NAME, DESCRIPTION, TECHNICAL_DESCRIPTION, IMAGE, PRICE, COIN, DISCOUNT, TAX, CATEGORY_ID, QUOTE_ID) VALUES ('24', 'Latonería y Pintura', 'Reparación de la carrocería y pintura del vehículo para restaurar su apariencia y estructura.', 'Reparación de abolladuras, reemplazo de paneles dañados, preparación de superficies y aplicación de pintura en varias capas para devolverle al vehículo su apariencia original y proteger la carrocería.', 'pintura.png', '1000000', 'COP', 0, 5, '5', '5');
 INSERT INTO PRODUCTS (ID, NAME, DESCRIPTION, TECHNICAL_DESCRIPTION, IMAGE, PRICE, COIN, DISCOUNT, TAX, CATEGORY_ID, QUOTE_ID) VALUES ('25', 'Polarizados y Películas de Seguridad', 'Instalación de láminas tintadas o de seguridad en los vidrios del vehículo.', 'Aplicación de películas tintadas para reducir el ingreso de luz solar y mejorar la privacidad, o de películas de seguridad que refuerzan los vidrios para proteger contra impactos y robos.', 'ventana.png', '400000', 'COP', 0, 5, '5', '1');
+
+
 
